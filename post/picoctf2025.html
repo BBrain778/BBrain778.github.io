@@ -59,13 +59,39 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <!-- Article 1 Preview -->
-                        <h3 id="-">簡單來說這是一個測試</h3>
-                        <h3 id="-">測試啥????</h3>
-                        <p>我們要使用Markdown to HTML工具</p>
-                        <ul>
-                        <li>如果插入照片呢?
-                        <img src="https://hackmd.io/_uploads/r1cLsEJnJe.png" alt="21"></li>
-                        </ul>
+                        <h1 id="reverse">reverse</h1>
+                            <h2 id="event-viewing">Event-Viewing</h2>
+                            <p><strong>第一部分</strong></p>
+                            <ul>
+                            <li>題目說明:They installed software using an installer they downloaded online</li>
+                            <li>事件 ID 1033觸發原因<ul>
+                            <li>安裝過程中的錯誤或警告</li>
+                            <li>安全軟件檢測到不明軟件</li>
+                            <li>與 Microsoft Exchange 或其他服務的相容性問題</li>
+                            </ul>
+                            </li>
+                            <li>觀察<ul>
+                            <li><code>cGljb0NURntFdjNudF92aTN3djNyXw==</code>因為結尾有<code>==</code>猜測為base64</li>
+                            <li>經過還原得到<code>picoCTF{Ev3nt_vi3wv3r_</code></li>
+                            </ul>
+                            </li>
+                            </ul>
+                            <p><img src="https://github.com/BBrain778/BBrain778.github.io/tree/main/assets/img/post/1033.PNG" alt="1033"></p>
+                            <p><strong>第二部分</strong></p>
+                            <p>這個部份我嘗試過很多事件ID，都是都找不到，但是根據第一部份以及第三部分找到的線索，觀察出flag都是以base64編碼</p>
+                            <p>我將<code>Windows_Logs.evtx</code>檔案在kali上改成<code>txt</code>檔案，接著尋找文件檔案中有出現<code>==</code>的地方</p>
+                            <p><img src="https://github.com/BBrain778/BBrain778.github.io/tree/main/assets/img/post/special.png" alt="special"></p>
+                            <p><strong>第三部分</strong></p>
+                            <ul>
+                            <li>題目說明:Now every time they bootup and login to their computer, a black command prompt screen quickly opens and closes and their computer shuts down instantly.</li>
+                            <li>事件 ID 1074觸發原因<ul>
+                            <li>用戶手動重啟或關機</li>
+                            <li>應用程式或進程觸發重啟</li>
+                            </ul>
+                            </li>
+                            <li><code>t00l_81ba3fe9}</code></li>
+                            </ul>
+                            <p><img src="https://github.com/BBrain778/BBrain778.github.io/tree/main/assets/img/post/1074.PNG" alt="1074"></p>
                     </div>
                 </div>
             </div>
