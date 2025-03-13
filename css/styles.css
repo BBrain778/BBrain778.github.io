@@ -10796,3 +10796,26 @@ header.masthead .post-heading .meta a {
     font-size: 2.25rem;
   }
 }
+
+pre {
+  background-color: #2e2e2e;
+  color: #f8f8f2;
+  padding: 20px;
+  border-radius: 5px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+code {
+  font-family: 'Courier New', monospace;
+}
+.hljs-keyword {
+  color: #ff79c6;
+  font-weight: bold;
+}
+.hljs-string {
+  color: #50fa7b;
+}
+.hljs-meta {
+  color: #8be9fd;
+}
