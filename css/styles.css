@@ -156,6 +156,26 @@ h4, .h4 {
   }
 }
 
+/* 處理圖片大小 */
+.article-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 500px; /* 設定最大高度，可根據需要調整 */
+  object-fit: contain; /* 保持圖片比例 */
+  display: block;
+  margin: 0 auto;
+}
+
+/* 在桌面版減少兩側空白 */
+@media (min-width: 992px) {
+  .container {
+      max-width: 960px; /* 原為720px左右，現在增寬 */
+  }
+  .col-md-10.col-lg-8.col-xl-7 {
+      max-width: 100%; /* 讓內容區更寬 */
+  }
+}
+
 h5, .h5 {
   font-size: 1.25rem;
 }
