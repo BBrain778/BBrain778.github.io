@@ -165,16 +165,31 @@ h4, .h4 {
   display: block;
   margin: 0 auto;
 }
-
 /* 在桌面版減少兩側空白 */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .container {
-      max-width: 960px; /* 原為720px左右，現在增寬 */
+      max-width: 1400px; /* 原為720px左右，現在增寬 */
   }
   .col-md-10.col-lg-8.col-xl-7 {
       max-width: 100%; /* 讓內容區更寬 */
+      width: 100%
+  }
+  article .container{
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
+  /* 中型螢幕調整 */
+  @media (min-width: 992px) and (max-width: 1199px) { /* lg尺寸 */
+    .container {
+        max-width: 1140px;
+    }
+    .col-md-10.col-lg-8.col-xl-7 {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
 
 h5, .h5 {
   font-size: 1.25rem;
