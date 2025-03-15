@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>台中交通CCTV</title>
+    <style>
+        /* 簡單樣式，讓資料好看一點 */
+        .cctv {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px;
+            max-width: 600px;
+        }
+        .cctv-title {
+            font-weight: bold;
+            color: #333;
+        }
+        .cctv-link {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>台中交通CCTV監視器</h1>
+    <div id="cctv-list">正在載入資料...</div>
+
+    <script>
+        // 用fetch從real-time.json抓資料
+        fetch("real-time.json")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("找不到real-time.json檔案！");
+                }
+                return response.json(); // 轉成JSON格式
+            })
+            .then(data => {
+                const cctvList = document.getElementById("cctv-list");
+                let html = "";
+
+                // 迴圈跑每一個監視器資料
+                data.forEach(item => {
+                    html += `
+                        <div class="cctv">
+                            <div class="cctv-title">${item.roadsection}</div>
+                            經緯度: (${item.px}, ${item.py})<br>
+                            狀態: ${item.status === "0" ? "正常" : "異常"}<br>
+                            <a href="${item.url}" class="cctv-link" target="_blank">查看即時影像</a>
+                        </div>
+                    `;
+                });
+
+                // 把整理好的內容塞進網頁
+                cctvList.innerHTML = html;
+            })
+            .catch(error => {
+                // 如果抓不到檔案，顯示錯誤訊息
+                document.getElementById("cctv-list").innerHTML = "載入資料失敗！請檢查real-time.json是否存在。";
+                console.error("錯誤：", error);
+            });
+    </script>
+</body>
+</html>
