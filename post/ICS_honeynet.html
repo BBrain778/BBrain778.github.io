@@ -59,23 +59,7 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <!-- Article 1 Preview -->
-                        <!-- 將標題字體變更大，使用 <h1> 標籤並透過 CSS 調整大小 -->
-                        <h1 style="font-size: 2.5em;">工業控制系統中惡意流量檢測與流量移轉</h1>
-
-                        <!-- 增加行距，使用 <br> 標籤分隔 -->
                         
-                        <h2 id="-">說明</h2><br>
-                        <h3 id="-">情境:</h3><br>
-
-                        <!-- 三點換行，使用 <p> 標籤分隔 -->
-                        <p>1. 在ubuntu(一)上以docker架設conpot容器，conpot容器作為合法的鐵路環境</p>
-                        <p>2. 在同一台ubuntu(一)機器上，若偵測到惡意使用者IP時，會動態產生以IP命名的新容器</p>
-                        <p>3. 另外一台ubuntu(二)作為日誌管理平台</p>
-
-                        <!-- 調整字體大小，使用較小的 <h3> 替代原本的 <h2> -->
-                        <h3 id="-2-attacker_ips-">(2) 創建 <code>attacker_ips</code> 名單</h3>
-                        <p>創建這個名單，後續可以讓腳本自動偵測此名單內的IP來自動啟動新容器</p>
-
                         <!-- 完整文章預覽部分 -->
                         <h1 style="font-size: 2.5em;">工業控制系統中惡意流量檢測與流量移轉</h1><br>
                         <h2 id="-">說明</h2><br>
@@ -95,11 +79,16 @@
                             <li><code>legal_conpot</code>為合法環境</li>
                             <li><code>conpot_clean</code>為新的映像檔</li>
                         </ul>
+
                         <hr>
                         <h3 id="-2-attacker_ips-">(2) 創建 <code>attacker_ips</code> 名單</h3>
                         <p>創建這個名單，後續可以讓腳本自動偵測此名單內的IP來自動啟動新容器</p>
                         <pre><code class="lang-bash">sudo ipset create attacker_ips hash:ip timeout 3600</code></pre>
-                        <h3 id="-attacker_ips-ip-1-">- 這個 <code>attacker_ips</code> 集合會存放 <strong>攻擊者的 IP</strong>，並且 <strong>1 小時後自動刪除</strong>，防止誤判。</h3>
+                        <ul>
+                            <li>這個<code>>attacker_ips</code>集合會存放攻擊者的 IP，並且1小時後自動刪除，防止誤判</li>
+                        </ul>
+
+                        <hr>
                         <h2 id="-3-iptables">(3) 流量移轉--iptables</h2>
                         <p>透過iptables來寫規則，將異常的IP記錄在先前創立的<code>attacker_ips</code></p>
                         <pre><code>sudo iptables -I DOCKER-USER 1 -p tcp --dport 5020 -m recent --set --name MODBUS_ATTACK
@@ -137,6 +126,7 @@
                         <li><code>-v /home/bbrain/conpot_logs/new_machine:/var/log/conpot</code>將新容器的log檔映射到ubuntu本機上，以利後須做日誌集中管理</li>
                         </ul>
                         <hr>
+
                         <h1 id="-">日誌集中管理</h1>
                         <p>我們原先採用較有名的ELK，但是實在太耗系統資源了，原是採用輕量級的<strong>Loki + Promtail + Grafana</strong></p>
                         <ul>
