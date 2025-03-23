@@ -1,3 +1,5 @@
+url:https://bbrain778.github.io/CCTV/Taichung_Traffic_CCTV_Monitor.html
+
 如果直接點擊traffic.html會讀取不到json檔案
 
 solution:
