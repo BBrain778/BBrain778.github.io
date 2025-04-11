@@ -190,6 +190,13 @@ h4, .h4 {
     }
 }
 
+.custom-card-img {
+  background-image: url('assets/img/Tools/eatwhat.png');
+  background-size: cover;
+  background-position: top;
+  height: 250px;
+}
+
 
 h5, .h5 {
   font-size: 1.25rem;
