@@ -1,0 +1,92 @@
+[
+  {
+    "name": "鼎泰豐",
+    "price": "200-300",
+    "area": "台北",
+    "distance": "far"
+  },
+  {
+    "name": "麥當勞",
+    "price": "0-100",
+    "area": "新莊",
+    "distance": "near"
+  },
+  {
+    "name": "八方雲集",
+    "price": "0-100",
+    "area": "新莊",
+    "distance": "near"
+  },
+  {
+    "name": "鬍鬚張魯肉飯",
+    "price": "100-200",
+    "area": "台北",
+    "distance": "far"
+  },
+  {
+    "name": "添好運點心",
+    "price": "100-200",
+    "area": "台北",
+    "distance": "far"
+  },
+  {
+    "name": "後港碳烤",
+    "price": "100-200",
+    "area": "三重",
+    "distance": "near"
+  },
+  {
+    "name": "涓豆腐",
+    "price": "200-300",
+    "area": "新莊",
+    "distance": "far"
+  },
+  {
+    "name": "乾杯燒肉",
+    "price": "300+",
+    "area": "台北",
+    "distance": "far"
+  },
+  {
+    "name": "爭鮮迴轉壽司",
+    "price": "100-200",
+    "area": "新莊",
+    "distance": "near"
+  },
+  {
+    "name": "五鮮級平價鍋物",
+    "price": "100-200",
+    "area": "三重",
+    "distance": "near"
+  },
+  {
+    "name": "丹堤咖啡",
+    "price": "100-200",
+    "area": "新莊",
+    "distance": "near"
+  },
+  {
+    "name": "星巴克",
+    "price": "100-200",
+    "area": "台北",
+    "distance": "far"
+  },
+  {
+    "name": "一蘭拉麵",
+    "price": "200-300",
+    "area": "台北",
+    "distance": "far"
+  },
+  {
+    "name": "石二鍋",
+    "price": "100-200",
+    "area": "新莊",
+    "distance": "near"
+  },
+  {
+    "name": "胖老爹炸雞",
+    "price": "100-200",
+    "area": "三重",
+    "distance": "near"
+  }
+]
