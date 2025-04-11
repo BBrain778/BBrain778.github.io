@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隨機餐廳抽籤器</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .filters {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        .filter-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        .result {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .restaurant-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        .restaurant-info {
+            margin-bottom: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        .loading {
+            font-size: 24px;
+            color: #7f8c8d;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        #jsonFileInput {
+            margin: 20px 0;
+        }
+        #fileWrapper {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .note {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍽️ 隨機餐廳抽籤器</h1>
+    
+    <div class="note">
+        系統將自動載入 restaurants.json 餐廳資料
+    </div>
+    
+    <div class="filters">
+        <div class="filter-group">
+            <div class="filter-title">價位範圍:</div>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" class="price" value="0-100" checked> 100以下</label>
+                <label class="checkbox-item"><input type="checkbox" class="price" value="100-200" checked> 100-200</label>
+                <label class="checkbox-item"><input type="checkbox" class="price" value="200-300" checked> 200-300</label>
+                <label class="checkbox-item"><input type="checkbox" class="price" value="300+" checked> 300以上</label>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <div class="filter-title">地區:</div>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" class="area" value="新莊" checked> 新莊</label>
+                <label class="checkbox-item"><input type="checkbox" class="area" value="三重" checked> 三重</label>
+                <label class="checkbox-item"><input type="checkbox" class="area" value="台北" checked> 台北</label>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <div class="filter-title">學校距離:</div>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" class="distance" value="near" checked> 學校附近</label>
+                <label class="checkbox-item"><input type="checkbox" class="distance" value="far" checked> 離學校遠</label>
+            </div>
+        </div>
+    </div>
+    
+    <button id="drawButton">🎲 開始抽籤</button>
+    
+    <div id="loading" class="loading hidden">抽籤中...</div>
+    
+    <div id="error" class="error hidden">請至少選擇一項條件</div>
+    
+    <div class="result">
+        <div id="resultMessage">請設定條件並點擊「開始抽籤」按鈕</div>
+        <div id="restaurantName" class="restaurant-name hidden"></div>
+        <div id="restaurantPrice" class="restaurant-info hidden"></div>
+        <div id="restaurantArea" class="restaurant-info hidden"></div>
+        <div id="restaurantDistance" class="restaurant-info hidden"></div>
+    </div>
+    
+    <div class="footer">
+        製作：隨機餐廳抽籤器 &copy; 2025
+    </div>
+
+    <script>
+        // 範例餐廳資料
+        const defaultRestaurants = [
+            {
+                "name": "鼎泰豐",
+                "price": "200-300",
+                "area": "台北",
+                "distance": "far"
+            },
+            {
+                "name": "麥當勞",
+                "price": "0-100",
+                "area": "新莊",
+                "distance": "near"
+            },
+            {
+                "name": "八方雲集",
+                "price": "0-100",
+                "area": "新莊",
+                "distance": "near"
+            },
+            {
+                "name": "鬍鬚張魯肉飯",
+                "price": "100-200",
+                "area": "台北",
+                "distance": "far"
+            },
+            {
+                "name": "添好運點心",
+                "price": "100-200",
+                "area": "台北",
+                "distance": "far"
+            },
+            {
+                "name": "後港碳烤",
+                "price": "100-200",
+                "area": "三重",
+                "distance": "near"
+            },
+            {
+                "name": "涓豆腐",
+                "price": "200-300",
+                "area": "新莊",
+                "distance": "far"
+            },
+            {
+                "name": "乾杯燒肉",
+                "price": "300+",
+                "area": "台北",
+                "distance": "far"
+            },
+            {
+                "name": "爭鮮迴轉壽司",
+                "price": "100-200",
+                "area": "新莊",
+                "distance": "near"
+            },
+            {
+                "name": "五鮮級平價鍋物",
+                "price": "100-200",
+                "area": "三重",
+                "distance": "near"
+            }
+        ];
+
+        // 全域變數
+        let restaurants = [...defaultRestaurants];
+        
+        // DOM元素
+        const drawButton = document.getElementById('drawButton');
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error');
+        const resultMessage = document.getElementById('resultMessage');
+        const restaurantNameElement = document.getElementById('restaurantName');
+        const restaurantPriceElement = document.getElementById('restaurantPrice');
+        const restaurantAreaElement = document.getElementById('restaurantArea');
+        const restaurantDistanceElement = document.getElementById('restaurantDistance');
+        
+        // 載入JSON檔案
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('restaurants.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('無法讀取餐廳數據');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        restaurants = data;
+                        console.log(`成功載入 ${restaurants.length} 間餐廳資料`);
+                    }
+                })
+                .catch(error => {
+                    console.error('讀取餐廳數據出錯:', error);
+                    alert('無法載入餐廳數據，使用內建範例數據');
+                    // 使用預設資料
+                });
+        });
+        
+        // 抽籤功能
+        drawButton.addEventListener('click', () => {
+            // 獲取選定的篩選條件
+            const selectedPrices = Array.from(document.querySelectorAll('.price:checked')).map(el => el.value);
+            const selectedAreas = Array.from(document.querySelectorAll('.area:checked')).map(el => el.value);
+            const selectedDistances = Array.from(document.querySelectorAll('.distance:checked')).map(el => el.value);
+            
+            // 檢查是否所有類型的條件都完全沒有選擇
+            if (selectedPrices.length === 0 && selectedAreas.length === 0 && selectedDistances.length === 0) {
+                errorElement.classList.remove('hidden');
+                setTimeout(() => {
+                    errorElement.classList.add('hidden');
+                }, 3000);
+                return;
+            }
+            
+            // 篩選符合條件的餐廳，條件可以是可選的
+            const filteredRestaurants = restaurants.filter(restaurant => {
+                const priceMatch = selectedPrices.length === 0 || selectedPrices.includes(restaurant.price);
+                const areaMatch = selectedAreas.length === 0 || selectedAreas.includes(restaurant.area);
+                const distanceMatch = selectedDistances.length === 0 || selectedDistances.includes(restaurant.distance);
+                return priceMatch && areaMatch && distanceMatch;
+            });
+            
+            // 檢查篩選後是否有餐廳
+            if (filteredRestaurants.length === 0) {
+                resultMessage.textContent = "沒有符合條件的餐廳，請調整條件後再試";
+                restaurantNameElement.classList.add('hidden');
+                restaurantPriceElement.classList.add('hidden');
+                restaurantAreaElement.classList.add('hidden');
+                restaurantDistanceElement.classList.add('hidden');
+                return;
+            }
+            
+            // 顯示載入中動畫
+            loadingElement.classList.remove('hidden');
+            resultMessage.textContent = "";
+            restaurantNameElement.classList.add('hidden');
+            restaurantPriceElement.classList.add('hidden');
+            restaurantAreaElement.classList.add('hidden');
+            restaurantDistanceElement.classList.add('hidden');
+            
+            // 延遲一下增加期待感
+            setTimeout(() => {
+                // 隨機選擇一間餐廳
+                const randomIndex = Math.floor(Math.random() * filteredRestaurants.length);
+                const selectedRestaurant = filteredRestaurants[randomIndex];
+                
+                // 隱藏載入中動畫
+                loadingElement.classList.add('hidden');
+                
+                // 顯示結果
+                restaurantNameElement.textContent = selectedRestaurant.name;
+                restaurantNameElement.classList.remove('hidden');
+                
+                restaurantPriceElement.textContent = `價位：${formatPrice(selectedRestaurant.price)}`;
+                restaurantPriceElement.classList.remove('hidden');
+                
+                restaurantAreaElement.textContent = `地區：${selectedRestaurant.area}`;
+                restaurantAreaElement.classList.remove('hidden');
+                
+                restaurantDistanceElement.textContent = `距離學校：${formatDistance(selectedRestaurant.distance)}`;
+                restaurantDistanceElement.classList.remove('hidden');
+            }, 800);
+        });
+        
+        // 格式化價位顯示
+        function formatPrice(price) {
+            switch(price) {
+                case '0-100': return '100元以下';
+                case '100-200': return '100-200元';
+                case '200-300': return '200-300元';
+                case '300+': return '300元以上';
+                default: return price;
+            }
+        }
+        
+        // 格式化距離顯示
+        function formatDistance(distance) {
+            switch(distance) {
+                case 'near': return '學校附近';
+                case 'far': return '離學校遠';
+                default: return distance;
+            }
+        }
+    </script>
+</body>
+</html>
