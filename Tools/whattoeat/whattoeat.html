@@ -247,7 +247,7 @@
         
         // 載入JSON檔案
         window.addEventListener('DOMContentLoaded', () => {
-            fetch('restaurants.json')
+            fetch('/Tools/whattoeat/restaurants.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('無法讀取餐廳數據');
