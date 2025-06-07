@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>本學期深度學習課程成果整理</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #2b6cb0;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #2b6cb0;
+    }
+
+    .project {
+      margin-bottom: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>這學期的課程成果整理</h1>
+  </header>
+
+  <div class="content">
+    <h2>平台介紹：Dify</h2>
+    <p>
+      Dify 是一個基於大型語言模型（LLM）的應用平台，讓開發者與非技術背景的使用者都能輕鬆建立 AI 助手，結合 prompt 設計、知識庫管理、API 串接與資料儲存等功能。
+    </p>
+    <img src="assets/img/Tools/eatwhat.png" alt="Dify 平台介紹圖" style="max-width: 100%; border-radius: 8px; margin: 1rem 0;" />
+
+    <h2>我完成的兩個小專案</h2>
+
+    <div class="project">
+      <h3>1. 出國秘書-結合line bot</h3>
+      <p>
+        剛好最近要出國，我透過RAG的技術，將所有旅遊相關的資訊丟進知識庫(ex:航班資訊、違禁品資訊)，最後將整個專案串接line bot，如此一來我出國時候就可以直接透過line bot詢問相關問題
+      </p>
+    </div>
+
+    <div class="project">
+      <h3>2. 身體健康數據顧問</h3>
+      <p>
+        我設計了一個健康顧問助手，使用者可以輸入自己的血壓、血糖與心跳資料，這些數據會儲存在 Notion 資料庫中。Dify 能根據這些資料給出飲食建議、生活習慣建議，並回答與健康相關的問題。
+      </p>
+    </div>
+
+    <h2>這門課我學到的重點</h2>
+    <ul>
+      <li>如何設計 Prompt 並優化 LLM 的回應內容</li>
+      <li>使用 Dify 建構 AI 助手並整合知識庫</li>
+      <li>資料儲存與 API 串接實作（如與 Notion、Google Sheets 整合）</li>
+      <li>基本的 HTML + CSS 排版與美化</li>
+    </ul>
+  </div>
+
+  <footer>
+    本頁由我手動設計完成 ｜ 輔仁大學 資安系三年級
+  </footer>
+</body>
+</html>
